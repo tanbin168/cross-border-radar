@@ -11,29 +11,7 @@ services:
     envVars:
       - key: APP_ACCESS_TOKEN
         sync: false
-      - key: OPENAI_API_KEY
-        sync: false
       - key: OPENAI_MODEL
         value: gpt-5-mini
       - key: REFRESH_INTERVAL_HOURS
         value: 6
-      - key: EBAY_CLIENT_ID
-        sync: false
-      - key: EBAY_CLIENT_SECRET
-        sync: false
-      - key: TEMU_DATA_ENDPOINT
-        sync: false
-      - key: TEMU_ACCESS_TOKEN
-        sync: false
-      - key: SHOPEE_DATA_ENDPOINT
-        sync: false
-      - key: SHOPEE_ACCESS_TOKEN
-        sync: false
-      - key: ALI_DATA_ENDPOINT
-        sync: false
-      - key: ALI_ACCESS_TOKEN
-        sync: false
-      - key: AMAZON_DATA_ENDPOINT
-        sync: false
-      - key: AMAZON_ACCESS_TOKEN
-        sync: false
