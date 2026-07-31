@@ -1,0 +1,69 @@
+name: 跨境爆款雷达每日刷新与发布
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    - cron: '0 6 * * *'
+      timezone: 'Asia/Shanghai'
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: radar-pages
+  cancel-in-progress: false
+
+jobs:
+  refresh-and-publish:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: 读取仓库
+        uses: actions/checkout@v6
+
+      - name: 设置 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: 刷新候选商品
+        env:
+          EBAY_CLIENT_ID: ${{ secrets.EBAY_CLIENT_ID }}
+          EBAY_CLIENT_SECRET: ${{ secrets.EBAY_CLIENT_SECRET }}
+          TEMU_DATA_ENDPOINT: ${{ secrets.TEMU_DATA_ENDPOINT }}
+          TEMU_ACCESS_TOKEN: ${{ secrets.TEMU_ACCESS_TOKEN }}
+          SHOPEE_DATA_ENDPOINT: ${{ secrets.SHOPEE_DATA_ENDPOINT }}
+          SHOPEE_ACCESS_TOKEN: ${{ secrets.SHOPEE_ACCESS_TOKEN }}
+          ALI_DATA_ENDPOINT: ${{ secrets.ALI_DATA_ENDPOINT }}
+          ALI_ACCESS_TOKEN: ${{ secrets.ALI_ACCESS_TOKEN }}
+          AMAZON_DATA_ENDPOINT: ${{ secrets.AMAZON_DATA_ENDPOINT }}
+          AMAZON_ACCESS_TOKEN: ${{ secrets.AMAZON_ACCESS_TOKEN }}
+        run: python scripts/refresh_products.py
+
+      - name: 保存最新数据到仓库
+        run: |
+          git config user.name "cross-border-radar-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add docs/data/products.json
+          if ! git diff --cached --quiet; then
+            git commit -m "自动刷新候选商品数据"
+            git push
+          fi
+
+      - name: 配置 GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: 上传网站文件
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: docs
+
+      - name: 发布网站
+        id: deployment
+        uses: actions/deploy-pages@v4
