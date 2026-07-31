@@ -5,8 +5,8 @@ on:
     branches: [main]
   workflow_dispatch:
   schedule:
-    - cron: '0 6 * * *'
-      timezone: 'Asia/Shanghai'
+    # GitHub cron 使用 UTC；每天北京时间 06:00 自动刷新
+    - cron: '0 22 * * *'
 
 permissions:
   contents: write
@@ -25,7 +25,7 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: 读取仓库
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
 
       - name: 设置 Python
         uses: actions/setup-python@v5
