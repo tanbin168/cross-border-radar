@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#07111f" />
+  <title>跨境爆款雷达</title>
+  <style>
+    :root{--bg:#07111f;--card:#10233a;--line:#284565;--text:#f7fbff;--muted:#9cb0c8;--accent:#ff9c32;--good:#40d59b;--warn:#ffd166}
+    *{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#07111f,#081624 55%,#07111f);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif;min-height:100vh}
+    .app{max-width:760px;margin:auto;padding:24px 18px 96px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px}.eyebrow{color:#ffb143;font-size:12px;font-weight:800;letter-spacing:3px}.title{font-size:34px;margin:8px 0 0}.btn{border:0;border-radius:18px;background:linear-gradient(135deg,#ff8435,#ffb23e);color:#1b1208;font-weight:900;padding:16px 20px;font-size:17px;box-shadow:0 10px 28px #ff8c3740}.summary,.toolbar,.note,.card,.empty{background:#0e2034;border:1px solid var(--line);border-radius:24px}.summary{display:grid;grid-template-columns:1fr auto auto;align-items:center;margin-top:22px;padding:18px;gap:20px}.status{font-weight:800}.sub{color:var(--muted);font-size:13px;margin-top:5px}.metric{text-align:center;min-width:70px}.metric b{font-size:26px}.metric span{display:block;color:var(--muted);font-size:12px}.toolbar{padding:14px;margin-top:16px}.toolbar input,.toolbar select{width:100%;background:#0a1828;border:1px solid #2a4767;border-radius:16px;color:white;padding:14px;font-size:16px}.filters{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}.note{margin-top:14px;padding:14px;color:#c7d5e4;font-size:13px;line-height:1.6}.list{display:grid;gap:14px;margin-top:16px}.card{overflow:hidden}.hero{display:flex;gap:14px;padding:16px}.pic{width:104px;height:104px;border-radius:18px;background:#dfe8f2;object-fit:cover}.body{min-width:0;flex:1}.platform{display:inline-block;background:#183653;border:1px solid #345b80;border-radius:999px;padding:5px 9px;font-size:12px}.name{font-size:17px;font-weight:850;margin:10px 0 6px;line-height:1.35}.meta{color:var(--muted);font-size:13px}.score{font-size:31px;font-weight:950;color:var(--good);white-space:nowrap}.reason{padding:0 16px 14px;color:#cfdae7;font-size:13px;line-height:1.6}.actions{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line)}.actions button,.actions a{appearance:none;text-decoration:none;text-align:center;background:transparent;border:0;color:#ffb143;font-weight:800;padding:15px;font-size:14px}.actions>*+*{border-left:1px solid var(--line)}dialog{border:1px solid #315675;border-radius:24px;background:#0b1b2c;color:white;width:min(92vw,700px);max-height:86vh;padding:0}dialog::backdrop{background:#000b}.modal-head{position:sticky;top:0;background:#0b1b2c;padding:18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:12px}.modal-content{padding:18px;white-space:pre-wrap;line-height:1.7;color:#dce7f1}.copy{background:#ff9c32;border:0;border-radius:12px;padding:10px 13px;font-weight:900}.empty{padding:32px;text-align:center;color:var(--muted)}
+  </style>
+</head>
+<body>
+<main class="app">
+  <div class="top"><div><div class="eyebrow">AI CROSS-BORDER RADAR</div><h1 class="title">今日潜力爆款</h1></div><button id="refresh" class="btn">↻ 刷新</button></div>
+  <section class="summary"><div><div id="status" class="status">正在连接...</div><div id="updated" class="sub">读取今日数据</div></div><div class="metric"><b id="count">0</b><span>候选商品</span></div><div class="metric"><b id="high">0</b><span>高潜力</span></div></section>
+  <section class="toolbar"><input id="search" placeholder="搜索商品或类目"/><div class="filters"><select id="platform"><option value="">全部平台</option></select><select id="score"><option value="0">全部分数</option><option value="80">80分以上</option><option value="90">90分以上</option></select></div></section>
+  <div class="note">⚡ 潜力概率是模型估算，用于缩小选品范围；下单、备货和上架前仍需核实供应链、侵权与平台规则。带“演示”标记的数据不是实时平台数据。</div>
+  <section id="list" class="list"></section>
+</main>
+<dialog id="detail"><div class="modal-head"><strong id="detailTitle">上架资料包</strong><button id="copy" class="copy">复制整套</button></div><div id="detailBody" class="modal-content"></div></dialog>
+<script>
+let all=[];
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+async function load(){
+  $('#status').textContent='正在刷新...';
+  try{
+    const r=await fetch('./data/products.json?ts='+Date.now(),{cache:'no-store'}); if(!r.ok) throw new Error('HTTP '+r.status);
+    const data=await r.json(); all=data.products||[];
+    $('#status').textContent=data.mode==='live'?'已连接真实数据源':'演示模式';
+    $('#updated').textContent='更新时间：'+(data.updated_at||'未知');
+    $('#count').textContent=all.length; $('#high').textContent=all.filter(x=>x.score>=85).length;
+    const ps=[...new Set(all.map(x=>x.platform).filter(Boolean))]; $('#platform').innerHTML='<option value="">全部平台</option>'+ps.map(x=>`<option>${esc(x)}</option>`).join(''); render();
+  }catch(e){$('#status').textContent='连接失败';$('#updated').textContent=e.message;$('#list').innerHTML='<div class="empty">暂时无法读取数据，请稍后刷新。</div>'}
+}
+function render(){
+  const q=$('#search').value.trim().toLowerCase(),p=$('#platform').value,min=Number($('#score').value);
+  const rows=all.filter(x=>(!q||(x.title+' '+(x.category||'')).toLowerCase().includes(q))&&(!p||x.platform===p)&&Number(x.score)>=min);
+  $('#list').innerHTML=rows.length?rows.map((x,i)=>`<article class="card"><div class="hero"><img class="pic" src="${esc(x.image||'https://placehold.co/300x300?text=Product')}" alt=""><div class="body"><span class="platform">${esc(x.platform)}${x.demo?' · 演示':''}</span><div class="name">${esc(x.title)}</div><div class="meta">${esc(x.category||'未分类')} · ${esc(x.price||'价格待核')}</div></div><div class="score">${esc(x.score)}%</div></div><div class="reason">${esc(x.reason||'')}</div><div class="actions"><a href="${esc(x.source_url||'#')}" target="_blank" rel="noopener">查看原链接</a><button onclick="openPack(${i})">复制上架资料</button></div></article>`).join(''):'<div class="empty">没有符合当前筛选条件的商品。</div>';
+  window.filtered=rows;
+}
+window.openPack=i=>{const x=window.filtered[i];$('#detailTitle').textContent=x.title;$('#detailBody').textContent=x.listing_pack||'资料包尚未生成';$('#detail').showModal()};
+$('#copy').onclick=async()=>{await navigator.clipboard.writeText($('#detailBody').textContent);$('#copy').textContent='已复制';setTimeout(()=>$('#copy').textContent='复制整套',1200)};
+$('#detail').addEventListener('click',e=>{if(e.target===$('#detail'))$('#detail').close()});
+$('#refresh').onclick=load;['search','platform','score'].forEach(id=>$('#'+id).addEventListener(id==='search'?'input':'change',render));load();
+</script>
+</body></html>
