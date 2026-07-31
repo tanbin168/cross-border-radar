@@ -1,30 +1,31 @@
 {
   "mode": "demo",
-  "updated_at": "等待首次自动刷新",
+  "updated_at": "2026-08-01 07:03 (UTC+8)",
+  "errors": [],
   "products": [
     {
-      "platform": "Amazon US",
+      "platform": "演示 · Amazon US",
       "title": "可折叠旅行收纳包",
       "category": "旅行收纳",
       "price": "$12.99",
       "score": 88,
-      "reason": "演示数据：轻小件、使用场景清晰、适合通过前后对比图展示核心卖点。",
+      "reason": "演示数据：轻小件、场景清晰、适合通过展开与折叠对比展示卖点。",
       "source_url": "https://www.amazon.com/",
       "image": "https://placehold.co/400x400?text=Demo+Product",
       "demo": true,
-      "listing_pack": "【演示资料包】\n\nTemu中文标题：1件装 便携折叠旅行收纳包 大容量分类整理袋 适用于行李箱 衣柜 出差与日常收纳\n\nTemu英文标题：1PC Portable Foldable Travel Storage Bag, Large Capacity Organizer for Suitcase, Closet, Business Trips and Daily Storage\n\n核心卖点：\n1. 折叠后体积小，便于携带\n2. 分类收纳，减少行李杂乱\n3. 拉链开合，拿取方便\n4. 适合旅行、出差和居家整理\n5. 主图建议展示展开与折叠双状态\n\n提示：这是演示资料，正式上架前需核实产品尺寸、材质、供应链和平台合规要求。"
+      "listing_pack": "【演示候选商品上架资料】\n\n原商品方向：可折叠旅行收纳包\n\nTemu中文标题：1件装 升级款便携多功能日常用品 小巧易收纳 操作方便 适用于居家 旅行 办公与日常使用\n\nTemu英文标题：1PC Upgraded Portable Multipurpose Daily Essential, Compact and Easy to Store, Convenient for Home, Travel, Office and Everyday Use\n\n核心卖点：\n1. 使用场景清晰，便于制作场景主图\n2. 小巧便携，适合跨境轻小件测试\n3. 操作直观，容易通过短视频展示\n4. 可从规格、数量和配色方向做差异化\n5. 上架前需重新核实尺寸、功能、供应链和平台规则\n\n图片建议：白底主图、核心功能图、使用场景图、尺寸图、细节图、前后对比图。\n\n注意：资料为选品辅助草稿，不得直接复制竞品品牌、图片、专利设计或受保护文案。"
     },
     {
-      "platform": "eBay",
+      "platform": "演示 · Temu",
       "title": "桌面迷你清洁工具",
       "category": "家居清洁",
       "price": "$8.49",
       "score": 84,
-      "reason": "演示数据：解决具体清洁痛点，短视频和场景图容易表达，适合低成本测款。",
-      "source_url": "https://www.ebay.com/",
+      "reason": "演示数据：解决具体清洁痛点，场景图片和短视频容易表达。",
+      "source_url": "https://www.temu.com/",
       "image": "https://placehold.co/400x400?text=Demo+Product",
       "demo": true,
-      "listing_pack": "【演示资料包】\n\n中文标题：1件装 巧妙升级款桌面迷你清洁擦 单手挤水便携清洁工具 适用于桌面 台面 厨房 水槽和浴室\n\n英文标题：1PC Upgraded Mini Desktop Cleaning Wiper, One-Hand Squeeze Portable Cleaning Tool for Desks, Countertops, Kitchen, Sink and Bathroom\n\n图片方案：白底主图、单手操作图、桌面清洁场景、尺寸图、清洗演示图。"
+      "listing_pack": "【演示候选商品上架资料】\n\n原商品方向：桌面迷你清洁工具\n\nTemu中文标题：1件装 升级款便携多功能日常用品 小巧易收纳 操作方便 适用于居家 旅行 办公与日常使用\n\nTemu英文标题：1PC Upgraded Portable Multipurpose Daily Essential, Compact and Easy to Store, Convenient for Home, Travel, Office and Everyday Use\n\n核心卖点：\n1. 使用场景清晰，便于制作场景主图\n2. 小巧便携，适合跨境轻小件测试\n3. 操作直观，容易通过短视频展示\n4. 可从规格、数量和配色方向做差异化\n5. 上架前需重新核实尺寸、功能、供应链和平台规则\n\n图片建议：白底主图、核心功能图、使用场景图、尺寸图、细节图、前后对比图。\n\n注意：资料为选品辅助草稿，不得直接复制竞品品牌、图片、专利设计或受保护文案。"
     }
   ]
 }
